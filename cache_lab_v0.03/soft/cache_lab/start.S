@@ -48,6 +48,9 @@
 	.globl	__main
 _start:
 start:
+    # disable_trace_cmp_s
+    # disable_num_monitor_s
+
     lui t2,0x0040    
 	mtc0	t2, c0_status       #设置bev位为1
 	mtc0	zero, c0_cause      #清除异常记录
@@ -58,14 +61,49 @@ start:
     jr t9                       #经过这一步后PC从bfc0跳转到9fc0，即从kseg1跳转到kseg0。目的是使用Cache，因为kseg1段地址访问不经过Cache，而kseg0段经过。
     nop
 
+
+.org 0x100
+test_finish:                    #程序运行结束后在数码管上显示周期数
+    addiu t0, t0, 1
+    li t1, 0xff
+    li t2, UART_ADDR
+    sb t1, 0x0(t2)              #mycpu_tb:187会识别并$finish
+
+1:
+    li t0, SWITCH_ADDR
+    lw t0, 0(t0)
+    andi t0, t0, 0x80           #swith, up:0, down:1。
+    beqz t0, 2f                 #拨码开关播上显示SoC上计时器计数，否则显示CPU内count寄存器计数
+    nop
+
+    li t0, CONFREG_CR0 # CPU count
+    lw t1, 0(t0)
+    b  3f
+    nop
+2:
+    li t0, CONFREG_CR1 # SoC COUNT
+    lw t1, 0(t0)
+
+3:
+    li t0, NUM_ADDR             #7段数码管地址
+    sw t1, 0(t0)
+    b 1b
+    nop
+##avoid cpu run error
+    lui   t0, 0x8000
+    addiu t1, t1, 1
+    or    t2, t0, zero
+    addu  t3, t5, t6
+    lw    t4, 0(t0)
+
 /*
  *  exception handle
  */
-.org 0x380                      #填充0，让地址以0x380对齐。即异常入口物理地址为1fc0_0380（虚拟地址为9fc0_0380）
+.org 0x380
 1:  
-    addiu t0, t0, 1             
-    b 1b                        #死循环
-    nop                         
+    addiu t0, t0, 1
+    b 1b
+    nop
 
 run_test:
 #if CMP_FUNC==1                 
@@ -92,37 +130,9 @@ run_test:
     b go_finish
     nop
 #endif
-
 go_finish:
     la t1, test_finish
-    li t2, 0x20000000           
-    or t9, t1, t2               #                                                                                
-	jr t9                       #从kseg0跳回到kseg1
-    nop
-
-test_finish:                    #程序运行结束后在数码管上显示周期数
-    addiu t0, t0, 1
-    li t1, 0xff
-    li t2, UART_ADDR
-    sb t1, 0x0(t2)
-
-1:
-    li t0, SWITCH_ADDR
-    lw t0, 0(t0)
-    andi t0, t0, 0x80           #swith, up:0, down:1。
-    beqz t0, 2f                 #拨码开关播上显示SoC上计时器计数，否则显示CPU内count寄存器计数
-    nop
-
-    li t0, CONFREG_CR0 # CPU count
-    lw t1, 0(t0)
-    b  3f
-    nop
-2:
-    li t0, CONFREG_CR1 # SoC COUNT
-    lw t1, 0(t0)
-
-3:
-    li t0, NUM_ADDR             #7段数码管地址
-    sw t1, 0(t0)
-    b 1b
+    li t2, 0x20000000 ###            
+    or t9, t1, t2     #kseg0 -> kseg1                                                                                                    
+	jr t9 
     nop

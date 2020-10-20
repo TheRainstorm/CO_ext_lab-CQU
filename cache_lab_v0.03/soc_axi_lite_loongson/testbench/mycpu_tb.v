@@ -34,7 +34,6 @@ THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 `define TRACE_REF_FILE "../../../../../../../traces/cache_lab_trace.txt"
 `define CONFREG_NUM_REG      soc_lite.u_confreg.num_data
-//for func test, no define RUN_PERF_TEST
 `define CONFREG_OPEN_TRACE   soc_lite.u_confreg.open_trace
 // `define CONFREG_OPEN_TRACE   1'b0
 `define CONFREG_NUM_MONITOR  1'b0

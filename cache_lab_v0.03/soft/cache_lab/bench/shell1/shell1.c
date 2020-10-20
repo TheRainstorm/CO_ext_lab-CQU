@@ -23,14 +23,12 @@ void shell1(void)
     disable_trace_cmp;         //关闭trace比对
     start_count_my  = get_count_my();
     start_count     = get_count();
-    enable_trace_cmp;          //打开trace比对
 
     //----------------------BEGIN-----------------------//
     //在这里调用你的函数
-    matrix_mult();  
+    matrix_mult();
     //----------------------END-------------------------//
 
-    disable_trace_cmp;         //关闭trace比对，且不再打开
     stop_count_my  = get_count_my();
     stop_count     = get_count();
     

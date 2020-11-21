@@ -1,0 +1,25 @@
+$ tree -L 2
+.
+|-- doc
+|   |-- A13_CPU TLB MMU\326\247\263\326.pdf
+|   `-- TLB\262\342\312\324\263\314\320\362\313\265\303\367.md
+|-- files.txt
+|-- readme.md
+|-- soc_axi_lite_loongson_func
+|   |-- ohhhh.wcfg
+|   |-- rtl
+|   |-- run_vivado
+|   `-- testbench
+|-- soc_axi_lite_loongson_tlb_func
+|   |-- ohhhh.wcfg
+|   |-- rtl
+|   |-- run_vivado
+|   `-- testbench
+|-- soft
+|   |-- func
+|   `-- tlb_func
+`-- traces
+    |-- func_test.txt
+    `-- golden_trace_tlb.txt
+
+13 directories, 8 files

@@ -30,10 +30,17 @@ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
 THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 ------------------------------------------------------------------------------*/
+//2020/11/13, 11/21
+//修改testbench文件mycpu_tb.v的逻辑。
+//  原来根据CONFREG_OPEN_TRACE来决定是否比较
+//  现在由CONFREG_OPEN_TRACE和trace文件的trace_cmp_flag同时决定是否进行比较。因此如果手动修改trace文件，也可以避免比较
+
 `timescale 1ns / 1ps
 
 `define TRACE_REF_FILE "../../../../../../../traces/cache_lab_trace.txt"
+
 `define CONFREG_NUM_REG      soc_lite.u_confreg.num_data
+//for func test, no define RUN_PERF_TEST
 `define CONFREG_OPEN_TRACE   soc_lite.u_confreg.open_trace
 // `define CONFREG_OPEN_TRACE   1'b0
 `define CONFREG_NUM_MONITOR  1'b0
@@ -119,14 +126,10 @@ reg [31:0] ref_wb_rf_wdata;
 always @(posedge cpu_clk)
 begin 
     #1;
-    if(|debug_wb_rf_wen && debug_wb_rf_wnum!=5'd0 && !debug_end && `CONFREG_OPEN_TRACE)
+    if(|debug_wb_rf_wen && debug_wb_rf_wnum!=5'd0 && !debug_end)
     begin
-        trace_cmp_flag=1'b0;
-        while (!trace_cmp_flag && !($feof(trace_ref)))
-        begin
-            $fscanf(trace_ref, "%h %h %h %h", trace_cmp_flag,
-                    ref_wb_pc, ref_wb_rf_wnum, ref_wb_rf_wdata);
-        end
+        $fscanf(trace_ref, "%h %h %h %h", trace_cmp_flag,
+                ref_wb_pc, ref_wb_rf_wnum, ref_wb_rf_wdata);
     end
 end
 
@@ -152,7 +155,7 @@ begin
     begin
         debug_wb_err <= 1'b0;
     end
-    else if(|debug_wb_rf_wen && debug_wb_rf_wnum!=5'd0 && !debug_end && `CONFREG_OPEN_TRACE)
+    else if(|debug_wb_rf_wen && debug_wb_rf_wnum!=5'd0 && !debug_end && trace_cmp_flag && `CONFREG_OPEN_TRACE)
     begin
         if (  (debug_wb_pc!==ref_wb_pc) || (debug_wb_rf_wnum!==ref_wb_rf_wnum)
             ||(debug_wb_rf_wdata_v!==ref_wb_rf_wdata_v) )
@@ -267,7 +270,7 @@ begin
         begin
             $display("----PASS!!!");
         end
-	    $finish;
-	end
+        $finish;
+    end
 end
 endmodule

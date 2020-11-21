@@ -11,15 +11,20 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="778383fs"></ZoomStartTime>
-      <ZoomEndTime time="10923384fs"></ZoomEndTime>
-      <Cursor1Time time="2963383fs"></Cursor1Time>
+      <ZoomStartTime time="1853196700fs"></ZoomStartTime>
+      <ZoomEndTime time="1853450201fs"></ZoomEndTime>
+      <Cursor1Time time="1853513200fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="247"></NameColumnWidth>
+      <NameColumnWidth column_width="242"></NameColumnWidth>
       <ValueColumnWidth column_width="72"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="7" />
+   <wave_markers>
+      <marker time="1339040700" label="" />
+      <marker time="1351982500" label="" />
+      <marker time="1853505500" label="" />
+   </wave_markers>
    <wvobject fp_name="/tb_top/soc_lite/u_cpu/rst" type="logic">
       <obj_property name="ElementShortName">rst</obj_property>
       <obj_property name="ObjectShortName">rst</obj_property>
@@ -134,7 +139,6 @@
    <wvobject fp_name="group170" type="group">
       <obj_property name="label">I_Cache</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="isExpanded"></obj_property>
       <wvobject fp_name="/tb_top/soc_lite/u_cpu/cache/i_cache/clk" type="logic">
          <obj_property name="ElementShortName">clk</obj_property>
          <obj_property name="ObjectShortName">clk</obj_property>
@@ -326,6 +330,10 @@
          <obj_property name="CustomSignalColor">#FAAFBE</obj_property>
          <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
+      <wvobject fp_name="/tb_top/soc_lite/u_cpu/cache/d_cache/c_dirty" type="logic">
+         <obj_property name="ElementShortName">c_dirty</obj_property>
+         <obj_property name="ObjectShortName">c_dirty</obj_property>
+      </wvobject>
       <wvobject fp_name="/tb_top/soc_lite/u_cpu/cache/d_cache/write" type="logic">
          <obj_property name="ElementShortName">write</obj_property>
          <obj_property name="ObjectShortName">write</obj_property>
@@ -333,6 +341,18 @@
       <wvobject fp_name="/tb_top/soc_lite/u_cpu/cache/d_cache/state" type="array">
          <obj_property name="ElementShortName">state[1:0]</obj_property>
          <obj_property name="ObjectShortName">state[1:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_top/soc_lite/u_cpu/cache/d_cache/write_cache_data" type="array">
+         <obj_property name="ElementShortName">write_cache_data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">write_cache_data[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_top/soc_lite/u_cpu/cache/d_cache/index" type="array">
+         <obj_property name="ElementShortName">index[9:0]</obj_property>
+         <obj_property name="ObjectShortName">index[9:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_top/soc_lite/u_cpu/cache/d_cache/index_save" type="array">
+         <obj_property name="ElementShortName">index_save[9:0]</obj_property>
+         <obj_property name="ObjectShortName">index_save[9:0]</obj_property>
       </wvobject>
       <wvobject fp_name="group225" type="group">
          <obj_property name="label">Cache Data</obj_property>
@@ -377,29 +397,13 @@
             <obj_property name="ElementShortName">c_block[31:0]</obj_property>
             <obj_property name="ObjectShortName">c_block[31:0]</obj_property>
          </wvobject>
-         <wvobject fp_name="/tb_top/soc_lite/u_cpu/cache/d_cache/read_req" type="logic">
-            <obj_property name="ElementShortName">read_req</obj_property>
-            <obj_property name="ObjectShortName">read_req</obj_property>
-         </wvobject>
          <wvobject fp_name="/tb_top/soc_lite/u_cpu/cache/d_cache/addr_rcv" type="logic">
             <obj_property name="ElementShortName">addr_rcv</obj_property>
             <obj_property name="ObjectShortName">addr_rcv</obj_property>
          </wvobject>
-         <wvobject fp_name="/tb_top/soc_lite/u_cpu/cache/d_cache/read_finish" type="logic">
-            <obj_property name="ElementShortName">read_finish</obj_property>
-            <obj_property name="ObjectShortName">read_finish</obj_property>
-         </wvobject>
-         <wvobject fp_name="/tb_top/soc_lite/u_cpu/cache/d_cache/write_req" type="logic">
-            <obj_property name="ElementShortName">write_req</obj_property>
-            <obj_property name="ObjectShortName">write_req</obj_property>
-         </wvobject>
          <wvobject fp_name="/tb_top/soc_lite/u_cpu/cache/d_cache/waddr_rcv" type="logic">
             <obj_property name="ElementShortName">waddr_rcv</obj_property>
             <obj_property name="ObjectShortName">waddr_rcv</obj_property>
-         </wvobject>
-         <wvobject fp_name="/tb_top/soc_lite/u_cpu/cache/d_cache/write_finish" type="logic">
-            <obj_property name="ElementShortName">write_finish</obj_property>
-            <obj_property name="ObjectShortName">write_finish</obj_property>
          </wvobject>
          <wvobject fp_name="/tb_top/soc_lite/u_cpu/cache/d_cache/write_mask" type="array">
             <obj_property name="ElementShortName">write_mask[3:0]</obj_property>

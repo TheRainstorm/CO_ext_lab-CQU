@@ -1,0 +1,17 @@
+$ tree -L 2
+.
+|-- doc
+|   |-- A12_\300\340SRAM\275\323\277\332\313\265\303\367.pdf
+|   `-- Cache\312\265\321\351\326\270\265\274\312\351.pdf
+|-- readme.txt
+|-- soc_axi_lite_loongson
+|   |-- ohhhh.wcfg
+|   |-- rtl
+|   |-- run_vivado
+|   `-- testbench
+|-- soft
+|   `-- cache_lab
+`-- traces
+    `-- cache_lab_trace.txt
+
+8 directories, 5 files

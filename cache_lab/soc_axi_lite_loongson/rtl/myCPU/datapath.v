@@ -248,7 +248,7 @@ module datapath (
 //IF
     assign pc_plus4F = pcF + 4;
 
-    pc_ctrl pc_ctrl0(
+    pc_ctrl_1 pc_ctrl0(
         //branch
         .branchD(branchD),              //D阶段是branch指令
         .branchM(branchM),              //M阶段是branch指令
@@ -342,7 +342,7 @@ module datapath (
         .rd1(rd1D), .rd2(rd2D)
     );
 
-    branch_predict branch_predict0(
+    branch_predict_1 branch_predict0(
         .clk(clk), .rst(rst),
         .instrD(instrD),
         .immD(immD),
